@@ -1,0 +1,16 @@
+PODS:
+  - IPaImgur (0.1.0)
+
+DEPENDENCIES:
+  - IPaImgur (from `../`)
+
+EXTERNAL SOURCES:
+  IPaImgur:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  IPaImgur: a4b2ce5eb252201ba28f3ae742d077f2c84d865c
+
+PODFILE CHECKSUM: 30a61f007b064bdb00f554c856b1fe8e94181f67
+
+COCOAPODS: 1.9.1

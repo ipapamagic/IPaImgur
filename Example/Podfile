@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'IPaImgur_Example' do
+  pod 'IPaImgur', :path => '../'
+
+  target 'IPaImgur_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
