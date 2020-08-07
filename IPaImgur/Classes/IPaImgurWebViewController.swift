@@ -10,7 +10,7 @@ import WebKit
 class IPaImgurWebViewController: UIViewController {
     var request:URLRequest!
     var complete:((Result<IPaImgur.UserInfo,Error>)->())!
-    static let oauthCallback = "ipaimgur://callback.com"
+    
     lazy var webView:WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ class IPaImgurWebViewController: UIViewController {
 extension IPaImgurWebViewController:WKNavigationDelegate
 {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let urlString = navigationAction.request.url?.absoluteString,urlString.hasPrefix(IPaImgurWebViewController.oauthCallback) {
+        if let urlString = navigationAction.request.url?.absoluteString,urlString.hasPrefix(IPaImgur.shared.callbackUrl) {
             decisionHandler(.cancel)
             IPaImgur.shared.handleLoginResponse(urlString) {  (result) in
                 self.complete(result)

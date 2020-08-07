@@ -84,9 +84,11 @@ public class IPaImgur: NSObject {
     }
     var clientId:String = ""
     var secret:String = ""
-    public func register(_ clientId:String,secret:String) {
+    var callbackUrl:String = ""
+    public func register(_ clientId:String,secret:String,callbackUrl:String) {
         self.clientId = clientId
         self.secret = secret
+        self.callbackUrl = callbackUrl
     }
     open func auth(from viewController:UIViewController,state:String,complete:@escaping (Result<UserInfo,Error>)->()) {
         
