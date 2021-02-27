@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaImgur'
-  s.version          = '1.0'
+  s.version          = '1.1'
   s.summary          = 'Imgur sdk for IOS'
 
 # This description is used to generate tags and improve search results.
