@@ -10,17 +10,17 @@ import IPaURLResourceUI
 import IPaImageTool
 
 extension IPaImgur {
-    public func apiData(_ api:String,method:String,headers:[String:String]?,params:[String:Any]?,complete:@escaping IPaURLResourceUIResultHandler) {
+    public func apiData(_ api:String,method:IPaURLResourceUI.HttpMethod,headers:[String:String]?,params:[String:Any]?,complete:@escaping IPaURLResourceUIResultHandler) {
         var _headers = self.requestHeader!
         if let headers = headers {
             for (key,value) in headers {
                 _headers[key] = value
             }
         }
-        self.resourceUI.apiData(api, method: method, headerFields: _headers, params: params, complete: complete)
+        _ = self.resourceUI.apiData(api, method: method, headerFields: _headers, params: params, complete: complete)
         
     }
-    public func apiUpload(_ api:String,method:String,headers:[String:String]?,params:[String:Any],file: IPaMultipartFile? = nil,complete:@escaping IPaURLResourceUIResultHandler) {
+    public func apiUpload(_ api:String,method:IPaURLResourceUI.HttpMethod,headers:[String:String]?,params:[String:Any],file: IPaMultipartFile? = nil,complete:@escaping IPaURLResourceUIResultHandler) {
         var _headers = self.requestHeader!
         if let headers = headers {
             for (key,value) in headers {
@@ -31,14 +31,14 @@ extension IPaImgur {
         if let file = file {
             files.append(file)
         }
-        self.resourceUI.apiUpload(api, method: method,headerFields:_headers , params: params, files: files, complete: complete)
+        _ = self.resourceUI.apiUpload(api, method: method,headerFields:_headers , params: params, files: files, complete: complete)
     }
     public func credits(_ complete:@escaping ([String:Any]?)->()) {
-        self.apiData("3/credits", method: "GET", headers: nil, params: nil, complete: {
+        self.apiData("3/credits", method: .get, headers: nil, params: nil, complete: {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = responseData as? [String:Any],let data = rData["data"] as? [String:Any] else {
+                guard let rData = try? responseData.decodeJson() as? [String:Any],let data = rData["data"] as? [String:Any] else {
                     complete(nil)
                     return
                 }
@@ -61,11 +61,11 @@ extension IPaImgur {
         if let tags = tags {
             params["tags"] = tags.joined(separator: ",")
         }
-        self.apiUpload("3/gallery/image/\(imageId)", method: "POST", headers: nil, params: params, file: nil, complete: {
+        self.apiUpload("3/gallery/image/\(imageId)", method: .post, headers: nil, params: params, file: nil, complete: {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = responseData as? [String:Any],let success = rData["success"] as? Int,success == 1 else {
+                guard let rData = try? responseData.decodeJson() as? [String:Any],let success = rData["success"] as? Int,success == 1 else {
                     complete(nil)
                     return
                 }
@@ -89,11 +89,11 @@ extension IPaImgur {
         if let album = album {
             params["album"] = album
         }
-        self.apiUpload("3/upload", method: "POST", headers: nil, params: ["image":data.base64EncodedString()], file: file, complete: {
+        self.apiUpload("3/upload", method: .post, headers: nil, params: ["image":data.base64EncodedString()], file: file, complete: {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = responseData as? [String:Any],let data = rData["data"] as? [String:Any] else {
+                guard let rData = try? responseData.decodeJson() as? [String:Any],let data = rData["data"] as? [String:Any] else {
                     complete(nil)
                     return
                 }

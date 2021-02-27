@@ -41,7 +41,7 @@ TODO: Add long description of the pod here.
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'IPaLog'
   s.dependency 'IPaKeyChain', '~> 2.2'
-  s.dependency 'IPaURLResourceUI', '~> 4.0'
-  s.dependency 'IPaImageTool', '~> 2.3'
+  s.dependency 'IPaURLResourceUI', '~> 5.0'
+  s.dependency 'IPaImageTool', '~> 2.4'
   
 end

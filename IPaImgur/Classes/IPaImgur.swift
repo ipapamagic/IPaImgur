@@ -111,10 +111,10 @@ public class IPaImgur: NSObject {
         let today = Date()
         if today.compare(date) == .orderedDescending {
             //need refresh token
-            self.apiUpload("oauth2/token", method: "POST", headers: nil, params: ["refresh_token":tokenData.refreshToken,"client_id":self.clientId,"client_secret":self.secret,"grant_type":"refresh_token"]) { (result) in
+            self.apiUpload("oauth2/token", method: .post, headers: nil, params: ["refresh_token":tokenData.refreshToken,"client_id":self.clientId,"client_secret":self.secret,"grant_type":"refresh_token"]) { (result) in
                 switch result {
                 case .success(let (_,responseData)):
-                    guard let data = responseData as? [String:Any] ,let token = data["access_token"] as? String,let  expireIn = data["expires_in"] as? Double,let refreshToken = data["refresh_token"] as? String,let accountId = data["account_id"] as? Int,let accountUsername = data["account_username"] as? String else {
+                    guard let data = try? responseData.decodeJson() as? [String:Any] ,let token = data["access_token"] as? String,let  expireIn = data["expires_in"] as? Double,let refreshToken = data["refresh_token"] as? String,let accountId = data["account_id"] as? Int,let accountUsername = data["account_username"] as? String else {
                         self.tokenData = nil
                         complete()
                         return
