@@ -33,11 +33,7 @@ public class IPaImgur: NSObject {
         }
         return header
     }
-    var resourceUI:IPaURLResourceUI = {
-        let resourceUI = IPaURLResourceUI()
-        resourceUI.baseURL = "https://api.imgur.com/"
-        return resourceUI
-    }()
+    var resourceUI:IPaURLResourceUI = IPaURLResourceUI(with: URL(string:"https://api.imgur.com/")!)
     var tokenData:ImgurToken? {
         get {
             let query = IPaKeyChainGenericPassword()
@@ -114,7 +110,7 @@ public class IPaImgur: NSObject {
             self.apiUpload("oauth2/token", method: .post, headers: nil, params: ["refresh_token":tokenData.refreshToken,"client_id":self.clientId,"client_secret":self.secret,"grant_type":"refresh_token"]) { (result) in
                 switch result {
                 case .success(let (_,responseData)):
-                    guard let data = try? responseData.decodeJson() as? [String:Any] ,let token = data["access_token"] as? String,let  expireIn = data["expires_in"] as? Double,let refreshToken = data["refresh_token"] as? String,let accountId = data["account_id"] as? Int,let accountUsername = data["account_username"] as? String else {
+                    guard let data = responseData.jsonData as? [String:Any] ,let token = data["access_token"] as? String,let  expireIn = data["expires_in"] as? Double,let refreshToken = data["refresh_token"] as? String,let accountId = data["account_id"] as? Int,let accountUsername = data["account_username"] as? String else {
                         self.tokenData = nil
                         complete()
                         return

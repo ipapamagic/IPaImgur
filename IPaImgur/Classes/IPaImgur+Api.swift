@@ -31,14 +31,14 @@ extension IPaImgur {
         if let file = file {
             files.append(file)
         }
-        _ = self.resourceUI.apiUpload(api, method: method,headerFields:_headers , params: params, files: files, complete: complete)
+        _ = self.resourceUI.apiFormDataUpload(api, method: method,headerFields:_headers , params: params, files: files, complete: complete)
     }
     public func credits(_ complete:@escaping ([String:Any]?)->()) {
         self.apiData("3/credits", method: .get, headers: nil, params: nil, complete: {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = try? responseData.decodeJson() as? [String:Any],let data = rData["data"] as? [String:Any] else {
+                guard let rData = responseData.jsonData as? [String:Any],let data = rData["data"] as? [String:Any] else {
                     complete(nil)
                     return
                 }
@@ -65,7 +65,7 @@ extension IPaImgur {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = try? responseData.decodeJson() as? [String:Any],let success = rData["success"] as? Int,success == 1 else {
+                guard let rData = responseData.jsonData as? [String:Any],let success = rData["success"] as? Int,success == 1 else {
                     complete(nil)
                     return
                 }
@@ -93,7 +93,7 @@ extension IPaImgur {
             result in
             switch result {
             case .success(let (_,responseData)):
-                guard let rData = try? responseData.decodeJson() as? [String:Any],let data = rData["data"] as? [String:Any] else {
+                guard let rData = responseData.jsonData as? [String:Any],let data = rData["data"] as? [String:Any] else {
                     complete(nil)
                     return
                 }
