@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'IPaImgur'
-  s.version          = '1.1'
+  s.version          = '1.2.0'
   s.summary          = 'Imgur sdk for IOS'
 
 # This description is used to generate tags and improve search results.
@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'IPaImgur/Classes/**/*'
+  s.source_files = 'Sources/IPaImgur/**/*'
   
   # s.resource_bundles = {
   #   'IPaImgur' => ['IPaImgur/Assets/*.png']
@@ -39,9 +39,9 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  s.dependency 'IPaLog'
-  s.dependency 'IPaKeyChain', '~> 2.2'
-  s.dependency 'IPaURLResourceUI', '~> 5.2'
-  s.dependency 'IPaImageTool', '~> 2.4'
+  s.dependency 'IPaLog','~> 3.1.0'
+  s.dependency 'IPaKeyChain', '~> 2.4.0'
+  s.dependency 'IPaURLResourceUI', '~> 5.4.0'
+  s.dependency 'IPaImageTool', '~> 2.6.0'
   
 end
